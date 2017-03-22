@@ -50,4 +50,11 @@ defmodule RpnTest do
     Rpn.push(context.rpn, :-)
     assert Rpn.peek(context.rpn) == [14]
   end
+
+  test "dividing", context do
+    Rpn.push(context.rpn, 4)
+    Rpn.push(context.rpn, 2)
+    Rpn.push(context.rpn, :/)
+    assert Rpn.peek(context.rpn) == [2]
+  end
 end

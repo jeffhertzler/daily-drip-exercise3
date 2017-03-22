@@ -28,6 +28,9 @@ defmodule Rpn do
   def handle_cast({:push, :x}, [second | [first | tail]]) do
     {:noreply, [first * second | tail]}
   end
+  def handle_cast({:push, :/}, [second | [first | tail]]) do
+    {:noreply, [first / second | tail]}
+  end
   def handle_cast({:push, item}, state) do
     {:noreply, [item | state]}
   end
