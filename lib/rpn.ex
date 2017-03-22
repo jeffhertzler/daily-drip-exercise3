@@ -2,8 +2,8 @@ defmodule Rpn do
   use GenServer
 
   ### Client API
-  def start do
-    GenServer.start(__MODULE__, [], [])
+  def start_link(options \\ []) do
+    GenServer.start_link(__MODULE__, [], options)
   end
 
   def peek(pid) do
