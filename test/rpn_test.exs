@@ -1,54 +1,53 @@
 defmodule RpnTest do
   use ExUnit.Case
 
-  test "starts with an empty stack" do
-    {:ok, pid} = Rpn.start_link
-    assert Rpn.peek(pid) == []
+  setup context do
+    {:ok, rpn} = Rpn.start_link([[name: context.test]])
+    {:ok, rpn: rpn}
   end
 
-  test "pushing onto the stack" do
-    {:ok, pid} = Rpn.start_link
-    Rpn.push(pid, 5)
-    assert Rpn.peek(pid) == [5]
-    Rpn.push(pid, 1)
-    assert Rpn.peek(pid) == [1, 5]
+  test "starts with an empty stack", context do
+    assert Rpn.peek(context.rpn) == []
   end
 
-  test "adding" do
-    {:ok, pid} = Rpn.start_link
-    Rpn.push(pid, 5)
-    Rpn.push(pid, 1)
-    Rpn.push(pid, :+)
-    assert Rpn.peek(pid) == [6]
+  test "pushing onto the stack", context do
+    Rpn.push(context.rpn, 5)
+    assert Rpn.peek(context.rpn) == [5]
+    Rpn.push(context.rpn, 1)
+    assert Rpn.peek(context.rpn) == [1, 5]
   end
 
-  test "subtracting" do
-    {:ok, pid} = Rpn.start_link
-    Rpn.push(pid, 5)
-    Rpn.push(pid, 1)
-    Rpn.push(pid, :-)
-    assert Rpn.peek(pid) == [4]
+  test "adding", context do
+    Rpn.push(context.rpn, 5)
+    Rpn.push(context.rpn, 1)
+    Rpn.push(context.rpn, :+)
+    assert Rpn.peek(context.rpn) == [6]
   end
 
-  test "multiplying" do
-    {:ok, pid} = Rpn.start_link
-    Rpn.push(pid, 5)
-    Rpn.push(pid, 2)
-    Rpn.push(pid, :x)
-    assert Rpn.peek(pid) == [10]
+  test "subtracting", context do
+    Rpn.push(context.rpn, 5)
+    Rpn.push(context.rpn, 1)
+    Rpn.push(context.rpn, :-)
+    assert Rpn.peek(context.rpn) == [4]
   end
 
-  test "wikipedia example" do
-    {:ok, pid} = Rpn.start_link
-    Rpn.push(pid, 5)
-    Rpn.push(pid, 1)
-    Rpn.push(pid, 2)
-    Rpn.push(pid, :+)
-    Rpn.push(pid, 4)
-    Rpn.push(pid, :x)
-    Rpn.push(pid, :+)
-    Rpn.push(pid, 3)
-    Rpn.push(pid, :-)
-    assert Rpn.peek(pid) == [14]
+  test "multiplying", context do
+    Rpn.push(context.rpn, 5)
+    Rpn.push(context.rpn, 2)
+    Rpn.push(context.rpn, :x)
+    assert Rpn.peek(context.rpn) == [10]
+  end
+
+  test "wikipedia example", context do
+    Rpn.push(context.rpn, 5)
+    Rpn.push(context.rpn, 1)
+    Rpn.push(context.rpn, 2)
+    Rpn.push(context.rpn, :+)
+    Rpn.push(context.rpn, 4)
+    Rpn.push(context.rpn, :x)
+    Rpn.push(context.rpn, :+)
+    Rpn.push(context.rpn, 3)
+    Rpn.push(context.rpn, :-)
+    assert Rpn.peek(context.rpn) == [14]
   end
 end
