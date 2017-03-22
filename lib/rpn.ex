@@ -15,10 +15,6 @@ defmodule Rpn do
   end
 
   ### Server API
-  def init(_) do
-    {:ok, []}
-  end
-
   def handle_call(:peek, _from, state) do
     {:reply, state, state}
   end
